@@ -18,9 +18,7 @@ df_authors = df_raw.select(
     col("id").alias("paper_id"),
     col("title"),
     explode(col("authorships")).alias("authorship")
-)
-
-df_authors = df_authors.select(
+).select(
     "paper_id",
     "title",
     col("authorship.author.display_name").alias("author_name"),
@@ -28,6 +26,3 @@ df_authors = df_authors.select(
 )
 
 df_authors.show(truncate=False)
-df_authors.printSchema()
-
-df_authors.write.parquet("authors.parquet", mode="overwrite")
